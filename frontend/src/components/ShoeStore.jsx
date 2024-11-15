@@ -1,15 +1,12 @@
 import ProductDetails from "./UI/ProductDetails.jsx";
+import shoes1 from "@/assets/green1.jpg";
+import shoes2 from "@/assets/CK1.jpg";
+import shoes3 from "@/assets/CK11.jpg";
+import shoes4 from "@/assets/furr1.jpg";
 import video from "@/assets/shoesbg.mp4";
 
-
-const images = import.meta.glob("@/assets/*.jpg", { eager: true });
-
-
-function getImagePath(filename) {
-  return images[`${filename}`]?.default || "";
-}
-
-
+// Preload all images from the `src/assets` folder
+const images = import.meta.glob("/src/assets/*.{jpg,png,svg}", { eager: true });
 
 import React, { useState, useRef, useEffect } from "react";
 import {
@@ -157,8 +154,8 @@ const ShoeStore = () => {
     return categMatch && priceMatch;
   });
 
-  function DynamicImage({ backendPath }) {
-    return <img src={backendPath.replace("/src", "")} alt="Backend Image" />;
+  function getImagePath(filename) {
+    return images[filename]?.default || "";
   }
 
   return (
@@ -337,14 +334,14 @@ const ShoeStore = () => {
                   <div className="space-y-4">
                     <div className="rounded-lg overflow-hidden shadow-lg transform hover:scale-105 transition-transform duration-300">
                       <img
-                        src="/src/assets/green1.jpg"
+                        src={shoes1}
                         alt="Store Front"
                         className="w-full h-48 object-cover"
                       />
                     </div>
                     <div className="rounded-lg overflow-hidden shadow-lg transform hover:scale-105 transition-transform duration-300">
                       <img
-                        src="/src/assets/CK1.jpg"
+                        src={shoes2}
                         alt="Premium Shoes"
                         className="w-full h-48 object-contain"
                       />
@@ -353,14 +350,14 @@ const ShoeStore = () => {
                   <div className="space-y-4 mt-8">
                     <div className="rounded-lg overflow-hidden shadow-lg transform hover:scale-105 transition-transform duration-300">
                       <img
-                        src="/src/assets/CK11.jpg"
+                        src={shoes3}
                         alt="Luxury Collection"
                         className="w-full h-48 object-contain"
                       />
                     </div>
                     <div className="rounded-lg overflow-hidden shadow-lg transform hover:scale-105 transition-transform duration-300">
                       <img
-                        src="/src/assets/furr1.jpg"
+                        src={shoes4}
                         alt="Casual Collection"
                         className="w-full h-48 object-cover"
                       />
@@ -403,13 +400,13 @@ const ShoeStore = () => {
             </div>
           </section>
           {/* After the hero section and before the main collection */}
-          <FeaturedShoes
+          {/* <FeaturedShoes
             shoes={shoes}
             onAddToCart={addToCart}
             onViewProduct={handleViewProduct}
             selectedcateg={selectedcateg} // Added this prop
             priceRange={priceRange} // Added this prop
-          />
+          /> */}
           {/* Updated main collection section */}
           <main
             ref={mainRef}
