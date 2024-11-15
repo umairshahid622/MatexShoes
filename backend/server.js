@@ -22,6 +22,7 @@ app.use(
     origin: [
       "http://localhost:5173", // Local development
       "http://localhost:3000", // Alternative local port
+      "http://localhost:3003", // Alternative local port
       "https://matexshoes.vercel.app", // Your future frontend URL
       "https://matexshoesapi.vercel.app", // Your future backend URL
       "https://matex-shoes.vercel.app/",
