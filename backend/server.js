@@ -25,7 +25,7 @@ app.use(
       "http://localhost:3003", // Alternative local port
       "https://matexshoes.vercel.app", // Your future frontend URL
       "https://matexshoesapi.vercel.app", // Your future backend URL
-      "https://matex-shoes.vercel.app/",
+      "https://matex-shoes.vercel.app",
     ],
     credentials: true,
   })
