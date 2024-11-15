@@ -76,11 +76,13 @@ const ShoeStore = () => {
   useEffect(() => {
     const fetchShoes = async () => {
       try {
-        const response = await fetch("http://localhost:3001/api/shoes");
+        const response = await fetch("http://localhost:3003/api/shoes");
         if (!response.ok) {
           throw new Error("Failed to fetch shoes");
         }
         const data = await response.json();
+        console.log(`Data::: ${data}`);
+
         setShoes(data);
       } catch (error) {
         console.error("Failed to fetch shoes:", error);
