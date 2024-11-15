@@ -1,4 +1,6 @@
 import ProductDetails from "./UI/ProductDetails.jsx";
+import video from "@/assets/shoesbg.mp4";
+
 import React, { useState, useRef, useEffect } from "react";
 import {
   Card,
@@ -81,7 +83,7 @@ const ShoeStore = () => {
           throw new Error("Failed to fetch shoes");
         }
         const data = await response.json();
-        console.log(`Data::: ${data}`);
+        console.log("Data:::", data);
 
         setShoes(data);
       } catch (error) {
@@ -226,7 +228,7 @@ const ShoeStore = () => {
                 playsInline
                 className="w-full h-full object-cover"
               >
-                <source src="/src/assets/shoesbg.mp4" type="video/mp4" />
+                <source src={video} type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
             </div>
