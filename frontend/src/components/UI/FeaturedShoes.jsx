@@ -1,4 +1,5 @@
 import React from "react";
+const images = import.meta.glob("/src/assets/*.{jpg,png,svg}", { eager: true });
 import {
   Card,
   CardContent,
@@ -49,7 +50,10 @@ const FeaturedShoes = ({
   if (filteredShoes.length === 0) {
     return null;
   }
-
+  function getImagePath(filename) {
+    console.log(images[filename]?.default);    
+    return images[filename]?.default || "";
+  }
   return (
     <section className="py-12 bg-gradient-to-b from-gray-100 to-white">
       <div className="max-w-6xl mx-auto px-4">
@@ -69,7 +73,7 @@ const FeaturedShoes = ({
               <div className="relative">
                 <CardHeader className="p-0">
                   <img
-                    src={shoe.image}
+                    src={getImagePath(shoe.image)}
                     alt={shoe.name}
                     className={`w-full h-48 object-contain group-hover:scale-105 transition-transform duration-300 ${
                       isSoldOut(shoe) ? "opacity-50" : ""
