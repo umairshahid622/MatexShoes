@@ -1,6 +1,16 @@
 import ProductDetails from "./UI/ProductDetails.jsx";
 import video from "@/assets/shoesbg.mp4";
 
+
+const images = import.meta.glob("@/assets/*.jpg", { eager: true });
+
+
+function getImagePath(filename) {
+  return images[`${filename}`]?.default || "";
+}
+
+
+
 import React, { useState, useRef, useEffect } from "react";
 import {
   Card,
@@ -146,6 +156,10 @@ const ShoeStore = () => {
       (priceRange === "Over 3000" && shoe.price > 3000);
     return categMatch && priceMatch;
   });
+
+  function DynamicImage({ backendPath }) {
+    return <img src={backendPath.replace("/src", "")} alt="Backend Image" />;
+  }
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -408,102 +422,108 @@ const ShoeStore = () => {
               </h1>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {filteredShoes.map((shoe) => (
-                <Card
-                  key={shoe.id}
-                  className="group hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden"
-                >
-                  <div className="relative">
-                    <CardHeader className="p-0">
-                      <img
-                        src={shoe.image}
-                        alt={shoe.name}
-                        className={`w-full h-48 object-contain group-hover:scale-105 transition-transform duration-300 ${
-                          isSoldOut(shoe.id) ? "opacity-100" : ""
-                        }`}
-                      />
-                      {[17, 14, 13, 12, 9, 8, 6, 3].includes(shoe.id) && (
-                        <div className="absolute top-2 left-2">
-                          <span className="bg-gradient-to-r from-teal-500 to-pink-500 text-white px-3 py-1 rounded-full text-sm">
-                            Featured
-                          </span>
-                        </div>
-                      )}
-                      {isSoldOut(shoe.id) && (
-                        <div className="absolute top-2 right-2">
-                          <span className="bg-red-500 text-white px-3 py-1 rounded-full text-sm">
-                            Sold Out
-                          </span>
-                        </div>
-                      )}
-                    </CardHeader>
-                  </div>
-
-                  <CardContent className="p-4">
-                    <CardTitle className="text-lg font-bold truncate">
-                      {shoe.name}
-                    </CardTitle>
-                    <CardDescription className="mt-2">
-                      <p className="text-gray-600 truncate">
-                        {shoe.description}
-                      </p>
-                      <p className="text-gray-600">Brand: {shoe.brand}</p>
-                      <p className="font-bold text-lg mt-2 text-teal-600">
-                        Rs. {shoe.price}
-                      </p>
-                    </CardDescription>
-                  </CardContent>
-
-                  <CardFooter className="p-4 pt-0 flex gap-2">
-                    <button
-                      onClick={() => handleViewProduct(shoe)}
-                      className="flex-1 bg-gray-100 text-gray-800 py-2 rounded hover:bg-gray-200 transition-colors"
-                    >
-                      View Details
-                    </button>
-                    <AlertDialog>
-                      <AlertDialogTrigger asChild>
-                        <button
-                          className={`flex-1 py-2 rounded transition-colors ${
-                            isSoldOut(shoe.id)
-                              ? "bg-gray-400 text-white cursor-not-allowed"
-                              : "bg-black text-white hover:bg-gray-800"
+              {filteredShoes.map((shoe) => {
+                return (
+                  <Card
+                    key={shoe.id}
+                    className="group hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden"
+                  >
+                    <div className="relative">
+                      <CardHeader className="p-0">
+                        <img
+                          src={getImagePath(shoe.image)}
+                          alt={shoe.name}
+                          className={`w-full h-48 object-contain group-hover:scale-105 transition-transform duration-300 ${
+                            isSoldOut(shoe.id) ? "opacity-100" : ""
                           }`}
-                        >
-                          Add to Cart
-                        </button>
-                      </AlertDialogTrigger>
-                      <AlertDialogContent>
-                        <AlertDialogHeader>
-                          <AlertDialogTitle>
-                            {isSoldOut(shoe.id)
-                              ? "Item Sold Out"
-                              : "Add to Cart"}
-                          </AlertDialogTitle>
-                          <AlertDialogDescription>
-                            {isSoldOut(shoe.id)
-                              ? "We're sorry, this item is currently sold out."
-                              : `Do you want to add ${shoe.name} to your cart?`}
-                          </AlertDialogDescription>
-                        </AlertDialogHeader>
-                        <AlertDialogFooter>
-                          <AlertDialogCancel>Close</AlertDialogCancel>
-                          {!isSoldOut(shoe.id) && (
-                            <AlertDialogAction
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                addToCart(shoe);
-                              }}
-                            >
-                              Add to Cart
-                            </AlertDialogAction>
-                          )}
-                        </AlertDialogFooter>
-                      </AlertDialogContent>
-                    </AlertDialog>
-                  </CardFooter>
-                </Card>
-              ))}
+                        />
+                        {[17, 14, 13, 12, 9, 8, 6, 3].includes(shoe.id) && (
+                          <div className="absolute top-2 left-2">
+                            <span className="bg-gradient-to-r from-teal-500 to-pink-500 text-white px-3 py-1 rounded-full text-sm">
+                              Featured
+                            </span>
+                          </div>
+                        )}
+                        {isSoldOut(shoe.id) && (
+                          <div className="absolute top-2 right-2">
+                            <span className="bg-red-500 text-white px-3 py-1 rounded-full text-sm">
+                              Sold Out
+                            </span>
+                          </div>
+                        )}
+                      </CardHeader>
+                    </div>
+                    <CardContent className="p-4">
+                      <CardTitle className="text-lg font-bold truncate">
+                        {shoe.name}
+                      </CardTitle>
+
+                      <CardDescription className="mt-2">
+                        <p className="text-gray-600 truncate">
+                          {shoe.description}
+                        </p>
+                        <p className="text-gray-600">Brand: {shoe.brand}</p>
+
+                        <p className="font-bold text-lg mt-2 text-teal-600">
+                          Rs. {shoe.price}
+                        </p>
+                      </CardDescription>
+                    </CardContent>
+
+                    <CardFooter className="p-4 pt-0 flex gap-2">
+                      <button
+                        onClick={() => handleViewProduct(shoe)}
+                        className="flex-1 bg-gray-100 text-gray-800 py-2 rounded hover:bg-gray-200 transition-colors"
+                      >
+                        View Details
+                      </button>
+                      <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                          <button
+                            className={`flex-1 py-2 rounded transition-colors ${
+                              isSoldOut(shoe.id)
+                                ? "bg-gray-400 text-white cursor-not-allowed"
+                                : "bg-black text-white hover:bg-gray-800"
+                            }`}
+                          >
+                            Add to Cart
+                          </button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                          <AlertDialogHeader>
+                            <AlertDialogTitle>
+                              {isSoldOut(shoe.id)
+                                ? "Item Sold Out"
+                                : "Add to Cart"}
+                            </AlertDialogTitle>
+                            <AlertDialogDescription>
+                              {isSoldOut(shoe.id)
+                                ? "We're sorry, this item is currently sold out."
+                                : `Do you want to add ${shoe.name} to your cart?`}
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                            <AlertDialogCancel>Close</AlertDialogCancel>
+                            {!isSoldOut(shoe.id) && (
+                              <AlertDialogAction
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  addToCart(shoe);
+                                }}
+                              >
+                                Add to Cart
+                              </AlertDialogAction>
+                            )}
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
+                    </CardFooter>
+                  </Card>
+                );
+              })}
+              {/* {filteredShoes.map((shoe){}
+              
+              )} */}
             </div>
           </main>
         </>
