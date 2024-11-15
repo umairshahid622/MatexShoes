@@ -400,13 +400,13 @@ const ShoeStore = () => {
             </div>
           </section>
           {/* After the hero section and before the main collection */}
-          {/* <FeaturedShoes
+          <FeaturedShoes
             shoes={shoes}
             onAddToCart={addToCart}
             onViewProduct={handleViewProduct}
-            selectedcateg={selectedcateg} // Added this prop
-            priceRange={priceRange} // Added this prop
-          /> */}
+            selectedcateg={selectedcateg}
+            priceRange={priceRange}
+          />
           {/* Updated main collection section */}
           <main
             ref={mainRef}
