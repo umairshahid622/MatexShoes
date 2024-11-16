@@ -19,5 +19,6 @@
       "src": "/(.*)",
       "dest": "/frontend/$1"
     }
-  ]
+  ],
+  "includeFiles": ["backend/db.json"]
 }
