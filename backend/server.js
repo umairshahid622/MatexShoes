@@ -8,15 +8,22 @@ const app = express();
 const path = require("path");
 const port = 3003;
 
-// Initialize db.json if it doesn't exist
-const initializeDb = () => {
-  const dbPath = path.join(__dirname, "db.json");
-  if (!fs.existsSync(dbPath)) {
-    fs.writeFileSync(dbPath, JSON.stringify({ shoes: [], orders: [] }));
-  }
-};
+const dbPath = path.join(__dirname, "db.json");
 
-initializeDb();
+// Initialize db.json if it doesn't exist
+// const initializeDb = () => {
+//   try {
+//     if (!fs.existsSync(dbPath)) {
+//       console.log(`Creating ${dbPath}...`);
+//       fs.writeFileSync(dbPath, JSON.stringify({ shoes: [], orders: [] }));
+//       console.log(`${dbPath} created successfully.`);
+//     }
+//   } catch (error) {
+//     console.error(`Error initializing db.json: ${error.message}`);
+//   }
+// };
+
+// initializeDb();
 
 app.use(
   cors({
