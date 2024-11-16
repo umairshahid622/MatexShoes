@@ -4,18 +4,15 @@ const cors = require("cors");
 const jsonServer = require("json-server");
 const nodemailer = require("nodemailer");
 const app = express();
+const fs = require("fs");
 const port = 3003;
 
-let db = {
-  shoes: [],
-  orders: [],
-};
-
-// Initialize database
 const initializeDb = () => {
+  const rawData = fs.readFileSync("./db.json", "utf-8");
+  const jsonData = JSON.parse(rawData);
   db = {
-    shoes: [],
-    orders: [],
+    shoes: jsonData.shoes || [],
+    orders: jsonData.orders || [],
   };
 };
 
